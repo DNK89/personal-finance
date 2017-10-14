@@ -1,9 +1,15 @@
 package lv.dnk89.personalfinance;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import lv.dnk89.personalfinance.businesslogic.*;
+import lv.dnk89.personalfinance.database.Database;
+import lv.dnk89.personalfinance.database.InMemoryDatabase;
+import lv.dnk89.personalfinance.ui.FinanceTransactionAddView;
+import lv.dnk89.personalfinance.ui.FinanceTransactionListView;
+import lv.dnk89.personalfinance.ui.FinanceTransactionRemoveView;
+import lv.dnk89.personalfinance.ui.View;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class PersonalFinanceApplication {
@@ -15,90 +21,29 @@ public class PersonalFinanceApplication {
         // 3. Print transactions list to console
         // 4. Exit
 
-        List<MoneyTransaction> transactions = new ArrayList<>();
+        Database database = new InMemoryDatabase();
+
+        FinanceTransactionAddService financeTransactionAddService = new FinanceFinanceTransactionAddServiceImpl(database);
+        FinanceTransactionRemoveService financeTransactionRemoveService = new FinanceFinanceTransactionRemoveServiceImpl(database);
+        FinanceTransactionListService financeTransactionListService = new FinanceFinanceTransactionListServiceImpl(database);
+
+        Map<Integer, View> views = new HashMap<>();
+        views.put(1, new FinanceTransactionAddView(financeTransactionAddService));
+        views.put(2, new FinanceTransactionRemoveView(financeTransactionRemoveService));
+        views.put(3, new FinanceTransactionListView(financeTransactionListService));
+
         while (true) {
             printProgramMenu();
             int menuItem = getFromUserMenuItemToExecute();
             if (menuItem == 4) {
                 break;
             }
-            switch (menuItem) {
-                case 1: {
-                    addTransactionToList(transactions);
-                    break;
-                }
-                case 2: {
-                    removeTransactionFromList(transactions);
-                    break;
-                }
-                case 3: {
-                    printTransactionListToConsole(transactions);
-                    break;
-                }
+
+            View selectedView = views.get(menuItem);
+            if (selectedView != null) {
+                selectedView.execute();
             }
         }
-    }
-
-    private static void printTransactionListToConsole(List<MoneyTransaction> transactions) {
-        System.out.println();
-        System.out.println("Transaction list START >>>");
-        System.out.println();
-
-        BigDecimal total = new BigDecimal(0);
-        for (MoneyTransaction tran: transactions) {
-            System.out.println(String.format("%2d) %7.2f %-25s", tran.getId(), tran.getAmount(), tran.getDescription()));
-            total = total.add(tran.getAmount());
-        }
-
-        System.out.println("----------------------------------------");
-        System.out.println(String.format("% 11.2f TOTAL", total));
-        System.out.println();
-        System.out.println("<<< Transaction list END");
-    }
-
-    private static void removeTransactionFromList(List<MoneyTransaction> transactions) {
-        System.out.println();
-        System.out.println("Remove transaction START >>>");
-        System.out.println();
-
-        System.out.print("Enter transaction id:");
-        int transactionId = Integer.parseInt(new Scanner(System.in).nextLine());
-
-        Optional<MoneyTransaction> transactionToRemove = transactions.stream()
-                                        .filter(moneyTransaction -> moneyTransaction.getId() == transactionId)
-                                        .findFirst();
-
-        if (transactionToRemove.isPresent()) {
-            transactions.remove(transactionToRemove.get());
-            System.out.println(String.format("Transaction with Id %d removed from list", transactionId));
-        } else {
-            System.out.println(String.format("Transaction with Id %d not found in a list!", transactionId));
-        }
-    }
-
-    private static void addTransactionToList(List<MoneyTransaction> transactions) {
-        System.out.println();
-        System.out.println("Add transaction START >>>");
-        System.out.println();
-
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter transaction amount:");
-        BigDecimal amount;
-        try {
-            amount = new BigDecimal(Double.parseDouble(sc.nextLine()));
-        } catch (NumberFormatException e) {
-            System.out.println(String.format("Something was wrong: %s", e.getMessage()));
-            return;
-        }
-
-        System.out.print("Enter transaction description:");
-        String description = sc.nextLine();
-
-        transactions.add(new MoneyTransaction(amount, description));
-
-        System.out.println();
-        System.out.println("<<< Add transaction END");
     }
 
     private static int getFromUserMenuItemToExecute() {

@@ -1,13 +1,13 @@
-1. Add money transaction date
-2. Implement transactions list ordering by date
-3. Implement transactions list filtering by period
+1. Add money financeTransaction date
+2. Implement financeTransactions list ordering by date
+3. Implement financeTransactions list filtering by period
 4. Introduce money accounts
-5. Add money account to transaction
+5. Add money account to financeTransaction
 6. Introduce spending categories (with sub-categories (max 3 levels))
-7. Add category to transaction
-8. Introduce transaction types (income, outcome, transfer)
-9. Negative transaction amount not allowed
-10. CRUD operations for transactions, accounts and categories
+7. Add category to financeTransaction
+8. Introduce financeTransaction types (income, outcome, transfer)
+9. Negative financeTransaction amount not allowed
+10. CRUD operations for financeTransactions, accounts and categories
 11. Store data and load it at program startup
 12. Show current user balance
 13. Charts with data filtering (period, account, categories)
