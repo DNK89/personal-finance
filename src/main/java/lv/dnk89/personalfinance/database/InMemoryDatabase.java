@@ -31,8 +31,8 @@ public class InMemoryDatabase implements Database {
 
     @Override
     public List<FinanceTransaction> getAllFinanceTransactions() {
-        List<FinanceTransaction> cloned = new ArrayList<>();
-        cloned.addAll(financeTransactions);
-        return cloned;
+        List<FinanceTransaction> mutableClone = new ArrayList<>();
+        mutableClone.addAll(financeTransactions);
+        return mutableClone;
     }
 }

@@ -1,6 +1,13 @@
 package lv.dnk89.personalfinance;
 
-import lv.dnk89.personalfinance.businesslogic.*;
+import lv.dnk89.personalfinance.businesslogic.FinanceTransactionAddService;
+import lv.dnk89.personalfinance.businesslogic.FinanceTransactionListService;
+import lv.dnk89.personalfinance.businesslogic.FinanceTransactionRemoveService;
+import lv.dnk89.personalfinance.businesslogic.FinanceTransactionTotalSumService;
+import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionAddServiceImpl;
+import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionListServiceImpl;
+import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionRemoveServiceImpl;
+import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionTotalSumServiceImpl;
 import lv.dnk89.personalfinance.database.Database;
 import lv.dnk89.personalfinance.database.InMemoryDatabase;
 import lv.dnk89.personalfinance.ui.FinanceTransactionAddView;
@@ -23,14 +30,15 @@ public class PersonalFinanceApplication {
 
         Database database = new InMemoryDatabase();
 
-        FinanceTransactionAddService financeTransactionAddService = new FinanceFinanceTransactionAddServiceImpl(database);
-        FinanceTransactionRemoveService financeTransactionRemoveService = new FinanceFinanceTransactionRemoveServiceImpl(database);
-        FinanceTransactionListService financeTransactionListService = new FinanceFinanceTransactionListServiceImpl(database);
+        FinanceTransactionAddService financeTransactionAddService = new FinanceTransactionAddServiceImpl(database);
+        FinanceTransactionRemoveService financeTransactionRemoveService = new FinanceTransactionRemoveServiceImpl(database);
+        FinanceTransactionListService financeTransactionListService = new FinanceTransactionListServiceImpl(database);
+        FinanceTransactionTotalSumService financeTransactionTotalSumService = new FinanceTransactionTotalSumServiceImpl();
 
         Map<Integer, View> views = new HashMap<>();
         views.put(1, new FinanceTransactionAddView(financeTransactionAddService));
         views.put(2, new FinanceTransactionRemoveView(financeTransactionRemoveService));
-        views.put(3, new FinanceTransactionListView(financeTransactionListService));
+        views.put(3, new FinanceTransactionListView(financeTransactionListService, financeTransactionTotalSumService));
 
         while (true) {
             printProgramMenu();

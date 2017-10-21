@@ -1,6 +1,8 @@
 package lv.dnk89.personalfinance.ui;
 
 import lv.dnk89.personalfinance.businesslogic.FinanceTransactionAddService;
+import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionAddRequest;
+import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionAddResponse;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -21,10 +23,10 @@ public class FinanceTransactionAddView implements View {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter transaction amount:");
-        BigDecimal amount;
+        System.out.print("Enter transaction sum:");
+        BigDecimal sum;
         try {
-            amount = new BigDecimal(Double.parseDouble(sc.nextLine()));
+            sum = new BigDecimal(Double.parseDouble(sc.nextLine()));
         } catch (NumberFormatException e) {
             System.out.println(String.format("Something was wrong: %s", e.getMessage()));
             return;
@@ -33,7 +35,14 @@ public class FinanceTransactionAddView implements View {
         System.out.print("Enter transaction description:");
         String description = sc.nextLine();
 
-        financeTransactionAddService.addTransaction(amount, description);
+        FinanceTransactionAddRequest addRequest = new FinanceTransactionAddRequest(sum, description);
+        FinanceTransactionAddResponse addResponse = financeTransactionAddService.addTransaction(addRequest);
+
+        if (addResponse.isSuccessful()) {
+            System.out.println("Added successfully");
+        } else {
+            System.out.println("Adding failed!");
+        }
 
         System.out.println();
         System.out.println("<<< Add transaction END");

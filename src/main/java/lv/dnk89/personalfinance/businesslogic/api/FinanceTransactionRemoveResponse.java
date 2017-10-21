@@ -1,10 +1,10 @@
-package lv.dnk89.personalfinance.businesslogic;
+package lv.dnk89.personalfinance.businesslogic.api;
 
 public class FinanceTransactionRemoveResponse {
 
     private boolean successful;
 
-    FinanceTransactionRemoveResponse(boolean successful) {
+    public FinanceTransactionRemoveResponse(boolean successful) {
         this.successful = successful;
     }
 

@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 
 public class FinanceTransaction {
     final private int id;
-    final private BigDecimal amount;
+    final private BigDecimal sum;
     final private String description;
 
     private static int nextId = 1;
 
-    public FinanceTransaction(BigDecimal amount, String description) {
+    public FinanceTransaction(BigDecimal sum, String description) {
         this.id = nextId++;
-        this.amount = amount;
+        this.sum = sum;
         this.description = description;
     }
 
@@ -19,8 +19,8 @@ public class FinanceTransaction {
         return id;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getSum() {
+        return sum;
     }
 
     public String getDescription() {
@@ -40,7 +40,7 @@ public class FinanceTransaction {
 
     @Override
     public String toString() {
-        return String.format("FinanceTransaction{id=%s,amount=%s,description=%s}", id, getAmount(), getDescription());
+        return String.format("FinanceTransaction{id=%s,sum=%s,description=%s}", id, getSum(), getDescription());
     }
 
 }
