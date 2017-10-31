@@ -2,21 +2,17 @@ package lv.dnk89.personalfinance.businesslogic.impl;
 
 import lv.dnk89.personalfinance.businesslogic.FinanceTransactionListService;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionListResponse;
-import lv.dnk89.personalfinance.database.Database;
-import lv.dnk89.personalfinance.domain.FinanceTransaction;
-
-import java.util.List;
+import lv.dnk89.personalfinance.database.FinanceTransactionDAO;
 
 public class FinanceTransactionListServiceImpl implements FinanceTransactionListService {
-    private Database database;
+    private FinanceTransactionDAO financeTransactionDAO;
 
-    public FinanceTransactionListServiceImpl(Database database) {
-        this.database = database;
+    public FinanceTransactionListServiceImpl(FinanceTransactionDAO financeTransactionDAO) {
+        this.financeTransactionDAO = financeTransactionDAO;
     }
 
     @Override
     public FinanceTransactionListResponse getFinanceTransactions() {
-        List<FinanceTransaction> financeTransactions = database.getAllFinanceTransactions();
-        return new FinanceTransactionListResponse(financeTransactions);
+        return new FinanceTransactionListResponse(financeTransactionDAO.getAll());
     }
 }

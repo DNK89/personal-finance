@@ -8,8 +8,8 @@ import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionAddServiceI
 import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionListServiceImpl;
 import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionRemoveServiceImpl;
 import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionTotalSumServiceImpl;
-import lv.dnk89.personalfinance.database.Database;
-import lv.dnk89.personalfinance.database.InMemoryDatabase;
+import lv.dnk89.personalfinance.database.FinanceTransactionDAO;
+import lv.dnk89.personalfinance.database.jdbc.FinanceTransactionDAOImpl;
 import lv.dnk89.personalfinance.ui.FinanceTransactionAddView;
 import lv.dnk89.personalfinance.ui.FinanceTransactionListView;
 import lv.dnk89.personalfinance.ui.FinanceTransactionRemoveView;
@@ -28,11 +28,11 @@ public class PersonalFinanceApplication {
         // 3. Print transactions list to console
         // 4. Exit
 
-        Database database = new InMemoryDatabase();
+        FinanceTransactionDAO financeTransactionDAO = new FinanceTransactionDAOImpl();
 
-        FinanceTransactionAddService financeTransactionAddService = new FinanceTransactionAddServiceImpl(database);
-        FinanceTransactionRemoveService financeTransactionRemoveService = new FinanceTransactionRemoveServiceImpl(database);
-        FinanceTransactionListService financeTransactionListService = new FinanceTransactionListServiceImpl(database);
+        FinanceTransactionAddService financeTransactionAddService = new FinanceTransactionAddServiceImpl(financeTransactionDAO);
+        FinanceTransactionRemoveService financeTransactionRemoveService = new FinanceTransactionRemoveServiceImpl(financeTransactionDAO);
+        FinanceTransactionListService financeTransactionListService = new FinanceTransactionListServiceImpl(financeTransactionDAO);
         FinanceTransactionTotalSumService financeTransactionTotalSumService = new FinanceTransactionTotalSumServiceImpl();
 
         Map<Integer, View> views = new HashMap<>();

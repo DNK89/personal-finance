@@ -3,20 +3,20 @@ package lv.dnk89.personalfinance.businesslogic.impl;
 import lv.dnk89.personalfinance.businesslogic.FinanceTransactionAddService;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionAddRequest;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionAddResponse;
-import lv.dnk89.personalfinance.database.Database;
+import lv.dnk89.personalfinance.database.FinanceTransactionDAO;
 import lv.dnk89.personalfinance.domain.FinanceTransaction;
 
 public class FinanceTransactionAddServiceImpl implements FinanceTransactionAddService {
-    private Database database;
+    private FinanceTransactionDAO financeTransactionDAO;
 
-    public FinanceTransactionAddServiceImpl(Database database) {
-        this.database = database;
+    public FinanceTransactionAddServiceImpl(FinanceTransactionDAO financeTransactionDAO) {
+        this.financeTransactionDAO = financeTransactionDAO;
     }
 
     @Override
     public FinanceTransactionAddResponse addTransaction(FinanceTransactionAddRequest request) {
         FinanceTransaction financeTransaction = new FinanceTransaction(request.getSum(), request.getDescription());
-        database.saveFinanceTransaction(financeTransaction);
+        financeTransactionDAO.save(financeTransaction);
         return new FinanceTransactionAddResponse(true);
     }
 }

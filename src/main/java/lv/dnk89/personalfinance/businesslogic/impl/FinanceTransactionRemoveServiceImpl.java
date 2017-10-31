@@ -1,20 +1,29 @@
 package lv.dnk89.personalfinance.businesslogic.impl;
 
+import lv.dnk89.personalfinance.businesslogic.FinanceTransactionRemoveService;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionRemoveRequest;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionRemoveResponse;
-import lv.dnk89.personalfinance.businesslogic.FinanceTransactionRemoveService;
-import lv.dnk89.personalfinance.database.Database;
+import lv.dnk89.personalfinance.database.FinanceTransactionDAO;
+import lv.dnk89.personalfinance.domain.FinanceTransaction;
+
+import java.util.Optional;
 
 public class FinanceTransactionRemoveServiceImpl implements FinanceTransactionRemoveService {
-    private Database database;
+    private FinanceTransactionDAO financeTransactionDAO;
 
-    public FinanceTransactionRemoveServiceImpl(Database database) {
-        this.database = database;
+    public FinanceTransactionRemoveServiceImpl(FinanceTransactionDAO financeTransactionDAO) {
+        this.financeTransactionDAO = financeTransactionDAO;
     }
 
     @Override
     public FinanceTransactionRemoveResponse removeById(FinanceTransactionRemoveRequest request) {
-        boolean success = database.removeFinanceTransactionById(request.getTransactionId());
-        return new FinanceTransactionRemoveResponse(success);
+        Optional<FinanceTransaction> transactionOptional = financeTransactionDAO.getById(request.getTransactionId());
+        if (transactionOptional.isPresent()) {
+            FinanceTransaction transaction = transactionOptional.get();
+            financeTransactionDAO.delete(transaction);
+            return new FinanceTransactionRemoveResponse(true);
+        } else {
+            return new FinanceTransactionRemoveResponse(false);
+        }
     }
 }

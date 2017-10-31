@@ -2,13 +2,13 @@ package lv.dnk89.personalfinance.businesslogic.api;
 
 public class FinanceTransactionRemoveRequest {
 
-    private final int transactionId;
+    private final Long transactionId;
 
-    public FinanceTransactionRemoveRequest(int transactionId) {
+    public FinanceTransactionRemoveRequest(Long transactionId) {
         this.transactionId = transactionId;
     }
 
-    public int getTransactionId() {
+    public Long getTransactionId() {
         return transactionId;
     }
 }

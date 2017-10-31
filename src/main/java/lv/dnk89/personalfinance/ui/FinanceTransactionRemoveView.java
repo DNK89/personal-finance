@@ -22,7 +22,7 @@ public class FinanceTransactionRemoveView implements View {
         System.out.print("Enter transaction id:");
         int transactionId = Integer.parseInt(new Scanner(System.in).nextLine());
 
-        FinanceTransactionRemoveRequest removeRequest = new FinanceTransactionRemoveRequest(transactionId);
+        FinanceTransactionRemoveRequest removeRequest = new FinanceTransactionRemoveRequest((long)transactionId);
         FinanceTransactionRemoveResponse removeResponse = financeTransactionRemoveService.removeById(removeRequest);
 
         if (removeResponse.isSuccessful()) {
