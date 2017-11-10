@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
-class DAOImpl {
+public class DAOImpl {
 
     private static final String DB_CONFIG_FILE = "database.properties";
 
@@ -16,7 +16,7 @@ class DAOImpl {
     private String password = null;
 
 
-    DAOImpl() {
+    public DAOImpl() {
         initDatabaseConnectionProperties();
         registerJDBCDriver();
     }
@@ -45,7 +45,7 @@ class DAOImpl {
         }
     }
 
-    Connection getConnection() throws DBException {
+    protected Connection getConnection() throws DBException {
         try{
             return DriverManager.getConnection(jdbcUrl, userName, password);
         } catch (SQLException e) {
@@ -55,7 +55,7 @@ class DAOImpl {
         }
     }
 
-    void closeConnectionResources(Connection connection, Statement statement, ResultSet rs) throws DBException {
+    protected void closeConnectionResources(Connection connection, Statement statement, ResultSet rs) throws DBException {
         try {
             if(rs != null) {
                 rs.close();
