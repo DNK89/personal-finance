@@ -4,9 +4,11 @@ import lv.dnk89.personalfinance.businesslogic.FinanceTransactionTotalSumService;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionTotalSumRequest;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionTotalSumResponse;
 import lv.dnk89.personalfinance.domain.FinanceTransaction;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Component
 public class FinanceTransactionTotalSumServiceImpl implements FinanceTransactionTotalSumService {
 
     @Override

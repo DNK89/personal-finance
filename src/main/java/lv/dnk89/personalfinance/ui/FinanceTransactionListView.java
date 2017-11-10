@@ -6,11 +6,17 @@ import lv.dnk89.personalfinance.businesslogic.FinanceTransactionListService;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionTotalSumRequest;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionTotalSumResponse;
 import lv.dnk89.personalfinance.domain.FinanceTransaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FinanceTransactionListView implements View {
+
     private FinanceTransactionListService financeTransactionListService;
+
     private FinanceTransactionTotalSumService financeTransactionTotalSumService;
 
+    @Autowired
     public FinanceTransactionListView(FinanceTransactionListService financeTransactionListService, FinanceTransactionTotalSumService financeTransactionTotalSumService) {
         this.financeTransactionListService = financeTransactionListService;
         this.financeTransactionTotalSumService = financeTransactionTotalSumService;

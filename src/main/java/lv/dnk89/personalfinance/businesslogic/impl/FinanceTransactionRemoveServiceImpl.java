@@ -5,12 +5,17 @@ import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionRemoveReques
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionRemoveResponse;
 import lv.dnk89.personalfinance.database.FinanceTransactionDAO;
 import lv.dnk89.personalfinance.domain.FinanceTransaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class FinanceTransactionRemoveServiceImpl implements FinanceTransactionRemoveService {
+
     private FinanceTransactionDAO financeTransactionDAO;
 
+    @Autowired
     public FinanceTransactionRemoveServiceImpl(FinanceTransactionDAO financeTransactionDAO) {
         this.financeTransactionDAO = financeTransactionDAO;
     }

@@ -1,19 +1,12 @@
 package lv.dnk89.personalfinance;
 
-import lv.dnk89.personalfinance.businesslogic.FinanceTransactionAddService;
-import lv.dnk89.personalfinance.businesslogic.FinanceTransactionListService;
-import lv.dnk89.personalfinance.businesslogic.FinanceTransactionRemoveService;
-import lv.dnk89.personalfinance.businesslogic.FinanceTransactionTotalSumService;
-import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionAddServiceImpl;
-import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionListServiceImpl;
-import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionRemoveServiceImpl;
-import lv.dnk89.personalfinance.businesslogic.impl.FinanceTransactionTotalSumServiceImpl;
-import lv.dnk89.personalfinance.database.FinanceTransactionDAO;
-import lv.dnk89.personalfinance.database.jdbc.FinanceTransactionDAOImpl;
+import lv.dnk89.personalfinance.configs.SpringAppConfig;
 import lv.dnk89.personalfinance.ui.FinanceTransactionAddView;
 import lv.dnk89.personalfinance.ui.FinanceTransactionListView;
 import lv.dnk89.personalfinance.ui.FinanceTransactionRemoveView;
 import lv.dnk89.personalfinance.ui.View;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,17 +21,12 @@ public class PersonalFinanceApplication {
         // 3. Print transactions list to console
         // 4. Exit
 
-        FinanceTransactionDAO financeTransactionDAO = new FinanceTransactionDAOImpl();
-
-        FinanceTransactionAddService financeTransactionAddService = new FinanceTransactionAddServiceImpl(financeTransactionDAO);
-        FinanceTransactionRemoveService financeTransactionRemoveService = new FinanceTransactionRemoveServiceImpl(financeTransactionDAO);
-        FinanceTransactionListService financeTransactionListService = new FinanceTransactionListServiceImpl(financeTransactionDAO);
-        FinanceTransactionTotalSumService financeTransactionTotalSumService = new FinanceTransactionTotalSumServiceImpl();
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringAppConfig.class);
 
         Map<Integer, View> views = new HashMap<>();
-        views.put(1, new FinanceTransactionAddView(financeTransactionAddService));
-        views.put(2, new FinanceTransactionRemoveView(financeTransactionRemoveService));
-        views.put(3, new FinanceTransactionListView(financeTransactionListService, financeTransactionTotalSumService));
+        views.put(1, applicationContext.getBean(FinanceTransactionAddView.class));
+        views.put(2, applicationContext.getBean(FinanceTransactionRemoveView.class));
+        views.put(3, applicationContext.getBean(FinanceTransactionListView.class));
 
         while (true) {
             printProgramMenu();

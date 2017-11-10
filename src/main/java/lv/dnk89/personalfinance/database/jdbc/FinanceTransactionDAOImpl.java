@@ -3,6 +3,7 @@ package lv.dnk89.personalfinance.database.jdbc;
 import lv.dnk89.personalfinance.database.DBException;
 import lv.dnk89.personalfinance.database.FinanceTransactionDAO;
 import lv.dnk89.personalfinance.domain.FinanceTransaction;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,9 @@ import java.util.Optional;
 
 import static lv.dnk89.personalfinance.domain.FinanceTransactionBuilder.createFinanceTransaction;
 
+@Component
 public class FinanceTransactionDAOImpl extends DAOImpl implements FinanceTransactionDAO {
+
     @Override
     public FinanceTransaction save(FinanceTransaction transaction) throws DBException {
         Connection connection = null;

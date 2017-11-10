@@ -3,14 +3,18 @@ package lv.dnk89.personalfinance.ui;
 import lv.dnk89.personalfinance.businesslogic.FinanceTransactionAddService;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionAddRequest;
 import lv.dnk89.personalfinance.businesslogic.api.FinanceTransactionAddResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
 
+@Component
 public class FinanceTransactionAddView implements View {
 
     private FinanceTransactionAddService financeTransactionAddService;
 
+    @Autowired
     public FinanceTransactionAddView(FinanceTransactionAddService financeTransactionAddService) {
         this.financeTransactionAddService = financeTransactionAddService;
     }
