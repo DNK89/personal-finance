@@ -1,18 +1,17 @@
 package lv.dnk89.personalfinance.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class FinanceTransaction {
 
     private Long id;
+    private LocalDate date;
     private BigDecimal sum;
     private String description;
 
-    public FinanceTransaction() {}
-
-    public FinanceTransaction(BigDecimal sum, String description) {
-        this.setSum(sum);
-        this.setDescription(description);
+    public FinanceTransaction() {
+        date = LocalDate.now();
     }
 
     public long getId() {
@@ -21,6 +20,14 @@ public class FinanceTransaction {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public BigDecimal getSum() {

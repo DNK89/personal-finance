@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,10 +25,11 @@ public class FinanceTransactionDAOImpl extends DAOImpl implements FinanceTransac
         ResultSet rs = null;
         try {
             connection = getConnection();
-            String sql = "insert into transactions(id, sum, description) values(default, ?, ?)";
+            String sql = "insert into transactions(id, sum, description, date) values(default, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setBigDecimal(1, transaction.getSum());
             preparedStatement.setString(2, transaction.getDescription());
+            preparedStatement.setObject(3, transaction.getDate());
             preparedStatement.executeUpdate();
             rs = preparedStatement.getGeneratedKeys();
             if (rs.next()) {
@@ -60,7 +62,8 @@ public class FinanceTransactionDAOImpl extends DAOImpl implements FinanceTransac
                 transaction = createFinanceTransaction()
                         .withId(rs.getLong("id"))
                         .withSum(rs.getBigDecimal("sum"))
-                        .withDescription(rs.getString("description")).build();
+                        .withDescription(rs.getString("description"))
+                        .withDate(rs.getObject("date", LocalDate.class)).build();
             }
             return Optional.ofNullable(transaction);
         } catch (Throwable e) {
@@ -108,7 +111,8 @@ public class FinanceTransactionDAOImpl extends DAOImpl implements FinanceTransac
                 FinanceTransaction transaction = createFinanceTransaction()
                         .withId(rs.getLong("id"))
                         .withSum(rs.getBigDecimal("sum"))
-                        .withDescription(rs.getString("description")).build();
+                        .withDescription(rs.getString("description"))
+                        .withDate(rs.getObject("date", LocalDate.class)).build();
                 transactions.add(transaction);
             }
         } catch (Throwable e) {

@@ -9,6 +9,8 @@ import lv.dnk89.personalfinance.domain.FinanceTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class FinanceTransactionListView implements View {
 
@@ -31,13 +33,14 @@ public class FinanceTransactionListView implements View {
         FinanceTransactionListResponse listResponse = financeTransactionListService.getFinanceTransactions();
 
         for (FinanceTransaction tran: listResponse.getFinanceTransactions()) {
-            System.out.println(String.format("%2d) %7.2f %-25s", tran.getId(), tran.getSum(), tran.getDescription()));
+            System.out.println(String.format("%2d) %7.2f %-25s %s", tran.getId(), tran.getSum(), tran.getDescription(),
+                    tran.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE)));
         }
 
         FinanceTransactionTotalSumRequest totalSumRequest = new FinanceTransactionTotalSumRequest(listResponse.getFinanceTransactions());
         FinanceTransactionTotalSumResponse totalSumResponse = financeTransactionTotalSumService.getTotalSum(totalSumRequest);
 
-        System.out.println("----------------------------------------");
+        System.out.println("------------------------------------------------");
         System.out.println(String.format("% 11.2f TOTAL", totalSumResponse.getTotalSum()));
         System.out.println();
         System.out.println("<<< FinanceTransaction list END");

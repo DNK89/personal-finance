@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.4
 -- Dumped by pg_dump version 9.5.4
 
--- Started on 2017-10-26 21:15:12
+-- Started on 2017-11-11 23:56:39
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -46,7 +46,8 @@ SET default_with_oids = false;
 CREATE TABLE transactions (
     id integer NOT NULL,
     sum numeric(18,2),
-    description character varying(100)
+    description character varying(100),
+    date date
 );
 
 
@@ -105,7 +106,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2017-10-26 21:15:12
+-- Completed on 2017-11-11 23:56:40
 
 --
 -- PostgreSQL database dump complete

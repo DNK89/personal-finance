@@ -8,6 +8,8 @@ import lv.dnk89.personalfinance.domain.FinanceTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static lv.dnk89.personalfinance.domain.FinanceTransactionBuilder.createFinanceTransaction;
+
 @Component
 public class FinanceTransactionAddServiceImpl implements FinanceTransactionAddService {
 
@@ -20,7 +22,10 @@ public class FinanceTransactionAddServiceImpl implements FinanceTransactionAddSe
 
     @Override
     public FinanceTransactionAddResponse addTransaction(FinanceTransactionAddRequest request) {
-        FinanceTransaction financeTransaction = new FinanceTransaction(request.getSum(), request.getDescription());
+        FinanceTransaction financeTransaction = createFinanceTransaction()
+                .withSum(request.getSum())
+                .withDate(request.getDate())
+                .withDescription(request.getDescription()).build();
         financeTransactionDAO.save(financeTransaction);
         return new FinanceTransactionAddResponse(true);
     }

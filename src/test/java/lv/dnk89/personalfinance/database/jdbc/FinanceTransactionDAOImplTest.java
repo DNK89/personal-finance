@@ -36,6 +36,7 @@ public class FinanceTransactionDAOImplTest {
         assertEquals(transaction.getId(), transactionFromDB.get().getId());
         assertEquals(transaction.getSum().compareTo(transactionFromDB.get().getSum()), 0);
         assertEquals(transaction.getDescription(), transactionFromDB.get().getDescription());
+        assertEquals(transaction.getDate(), transactionFromDB.get().getDate());
     }
 
     @Test

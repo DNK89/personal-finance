@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 @Component
@@ -27,6 +29,9 @@ public class FinanceTransactionAddView implements View {
 
         Scanner sc = new Scanner(System.in);
 
+        System.out.print("Enter transaction date (YYYY-MM-DD):");
+        LocalDate date = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ISO_LOCAL_DATE);
+
         System.out.print("Enter transaction sum:");
         BigDecimal sum;
         try {
@@ -39,7 +44,7 @@ public class FinanceTransactionAddView implements View {
         System.out.print("Enter transaction description:");
         String description = sc.nextLine();
 
-        FinanceTransactionAddRequest addRequest = new FinanceTransactionAddRequest(sum, description);
+        FinanceTransactionAddRequest addRequest = new FinanceTransactionAddRequest(sum, description, date);
         FinanceTransactionAddResponse addResponse = financeTransactionAddService.addTransaction(addRequest);
 
         if (addResponse.isSuccessful()) {
